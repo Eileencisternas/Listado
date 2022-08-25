@@ -12,6 +12,10 @@ h1{
     align-items: flex-start;
     text-align: initial;
     padding: 10px;
+    margin-left: 20px;
+    border: 1px solid blue;
+    border-radius: 10px;
+    width: 600px;
 }
 .contentButton{
     display: flex;

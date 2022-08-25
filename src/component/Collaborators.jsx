@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -12,14 +13,26 @@ const Collaborators = () => {
     const [emailCollaborator, setEmailCollaborator] = useState('');
     const [listCollaborator, setListCollaborator] = useState(baseCollaborator);
 
+
     // Función que envía el formulario
     const enviarFormulario = (e) => {
         e.preventDefault();
         setListCollaborator([...listCollaborator, {
+
             name: nameCollaborator,
             email: emailCollaborator,
         }])
     }
+    const searchCollaborator = (searchInput) => {
+        setListCollaborator(baseCollaborator)
+        if (searchInput !== '') {
+            let lisFilter = listCollaborator.filter((ele) => (ele.name.includes(searchInput)))
+            setListCollaborator(lisFilter)
+        }
+    }
+
+
+
 
     return (
         <div>
@@ -35,6 +48,7 @@ const Collaborators = () => {
                                     placeholder="Buscar un Colaborador"
                                     className="me-2"
                                     aria-label="Search"
+                                    onChange={(e) => searchCollaborator(e.target.value)}
                                 />
                             </Form>
                         </Navbar>
