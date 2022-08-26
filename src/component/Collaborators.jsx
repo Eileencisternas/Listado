@@ -6,33 +6,40 @@ import Navbar from 'react-bootstrap/Navbar';
 import './Collaborators.css'
 import { useState } from "react";
 import baseCollaborator from '../assets/baseCollaborator';
+import { nanoid } from 'nanoid';
 
 
 const Collaborators = () => {
     const [nameCollaborator, setNameCollaborator] = useState('');
     const [emailCollaborator, setEmailCollaborator] = useState('');
     const [listCollaborator, setListCollaborator] = useState(baseCollaborator);
+    const [auxList, setAuxList]= useState(baseCollaborator);
 
 
     // Función que envía el formulario
     const enviarFormulario = (e) => {
         e.preventDefault();
-        setListCollaborator([...listCollaborator, {
-
-            name: nameCollaborator,
-            email: emailCollaborator,
-        }])
+        if(!nameCollaborator || !emailCollaborator ){
+            alert("Llenar los campos vacios")
+        }
+        else{
+            setListCollaborator([...listCollaborator, {
+                id: nanoid(),
+                name: nameCollaborator,
+                email: emailCollaborator,
+            }])
+            setAuxList(listCollaborator)
+        }
+       
     }
+    //se crea funcion filtrar
     const searchCollaborator = (searchInput) => {
-        setListCollaborator(baseCollaborator)
+        setAuxList(listCollaborator)
         if (searchInput !== '') {
             let lisFilter = listCollaborator.filter((ele) => (ele.name.includes(searchInput)))
-            setListCollaborator(lisFilter)
+            setAuxList(lisFilter)
         }
     }
-
-
-
 
     return (
         <div>
@@ -77,8 +84,8 @@ const Collaborators = () => {
             <div className='contentCollaborator'>
                 <h3>Listado de Colaboradores</h3>
                 <ul>
-                    {listCollaborator.map(collaborator =>
-                        <li key={collaborator.name}> {collaborator.name} - {collaborator.email}
+                    {auxList.map(collaborator =>
+                        <li key={collaborator.id}> {collaborator.name} - {collaborator.email}
                         </li>)}
                 </ul>
             </div>
